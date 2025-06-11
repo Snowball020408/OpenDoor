@@ -3,7 +3,7 @@ from scapy.all import *
 def scan_port(target,port):
     # sends 1 syn package to destination ip and port and waits for response
     pkt = IP(dst=target)/TCP(dport=port, flags="S")
-    response = sr1(pkt, timeout=1, verbose=0)
+    response = sr1(pkt, timeout=1.5, verbose=0)
     if response is None:
         return "Filtered or no response"
     elif response.haslayer(TCP):
@@ -15,4 +15,3 @@ def scan_port(target,port):
         elif response.getlayer(TCP).flags == 0x14:
             return "Closed" # ja ist halt dicht lol
     return "Unkown" # ich weis ehrlich gesagt nicht einmal selber wann das returnt weil ein port immer closed oder open ist aber das muss so sonst error
-
